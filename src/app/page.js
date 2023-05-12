@@ -1,3 +1,7 @@
+import "./globals.css";
+import Button from "../components/button.js";
+
 export default function Home() {
-  return <h1>Hello World!</h1>;
+  const name = "Click Me!";
+  return <Button name={name} />;
 }
