@@ -19,7 +19,7 @@ export default class Button extends React.Component {
           className="compButton"
           onClick={() => this.setState({ count: this.state.count + 1 })}
         >
-          {this.content}
+          <span>{this.content}</span>
         </button>
       </Link>
     );

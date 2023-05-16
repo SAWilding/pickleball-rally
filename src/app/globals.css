@@ -11,20 +11,36 @@
 }
 
 :root {
+    --court-blue: #2f5998;
     --yellow: #F3FF10;
     --night: #00120B;
     --dark-slate-gray: #35605A;
     --slate-gray: #6B818C;
     --content-font: "Oswald", serif;
 }
-nav>* {
-    font-family: DisplayFont;
-    font-size: 16pt;
+
+main {
+    margin-top: 5rem;
 }
+
+h1, h2, h3, h4 {
+    font-family: DisplayFont;
+}
+
+h1 {
+    font-size: 30pt;
+}
+
 p {
     font-family: var(--content-font);
 }
+
 header {
+    z-index: 5;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -34,16 +50,23 @@ header {
     box-shadow: 1px 4px 15px 1px var(--slate-gray);
 }
 
+img {
+    margin: 2rem;
+}
+
+/* ======= NAVIGATION ====== */
+nav>* {
+    font-family: DisplayFont;
+    font-size: 16pt;
+}
+
 nav>ul {
     margin: 1.5rem;
     display: flex;
     justify-content: space-evenly;
 }
 
-img {
-    margin: 2rem;
-}
-
+/* ========== BUTTON ======== */
 .compButton {
     font-family: DisplayFont;
     font-size: 16pt;
@@ -58,4 +81,26 @@ img {
     background-color: var(--dark-slate-gray);
     color: white;
     transition: 0.3s;
+}
+
+/* ======= BODY ======== */
+
+main {
+    height: 100%;
+}
+
+
+/* ===== FOOTER ====== */
+
+footer {
+    color: white;
+    height: 50px;
+    width: 100%;
+    background-color: var(--night);
+}
+
+footer p {
+    padding-top: 1rem;
+    max-width: 1000px;
+    margin: auto;
 }

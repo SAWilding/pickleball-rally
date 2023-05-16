@@ -1,10 +1,16 @@
 import "@/app/globals.css";
 import Header from "@/components/header";
-export default function Find() {
-  return (
-    <div>
-      <Header></Header>
-      <p>Welcom to the Find page!</p>
-    </div>
-  );
+import React from "react";
+export default class Find extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <>
+        <Header></Header>
+        <p>Welcom to the Find page!</p>
+      </>
+    );
+  }
 }
