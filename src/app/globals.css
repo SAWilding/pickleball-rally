@@ -1,14 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Roboto&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@font-face {
-    font-family: DisplayFont;
-    src: url(/fonts/excluded.ttf);
-    font-weight: normal;
-    font-style: normal;
-}
 
 :root {
     --court-blue: #2f5998;
@@ -16,7 +9,9 @@
     --night: #00120B;
     --dark-slate-gray: #35605A;
     --slate-gray: #6B818C;
-    --content-font: "Oswald", serif;
+    --content-font: "Roboto", sans-serif;
+    --display-font: "Bungee", sans-serif;
+    --border-radius: 5px;
 }
 
 main {
@@ -24,7 +19,7 @@ main {
 }
 
 h1, h2, h3, h4 {
-    font-family: DisplayFont;
+    font-family: var(--display-font);
 }
 
 h1 {
@@ -33,6 +28,11 @@ h1 {
 
 p {
     font-family: var(--content-font);
+}
+
+.logo {
+    max-width: 200px;
+    background-color: transparent;
 }
 
 header {
@@ -50,13 +50,9 @@ header {
     box-shadow: 1px 4px 15px 1px var(--slate-gray);
 }
 
-img {
-    margin: 2rem;
-}
-
 /* ======= NAVIGATION ====== */
 nav>* {
-    font-family: DisplayFont;
+    font-family: var(--display-font);
     font-size: 16pt;
 }
 
@@ -68,12 +64,12 @@ nav>ul {
 
 /* ========== BUTTON ======== */
 .compButton {
-    font-family: DisplayFont;
+    font-family: var(--display-font);
     font-size: 16pt;
     padding: .5rem;
     background-color: var(--yellow);
     box-shadow: 1px 1px 4px 1px var(--slate-gray);
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     margin: 1rem;
 }
 
@@ -94,7 +90,7 @@ main {
 
 footer {
     color: white;
-    height: 50px;
+    height: 200px;
     width: 100%;
     background-color: var(--night);
 }
@@ -103,4 +99,150 @@ footer p {
     padding-top: 1rem;
     max-width: 1000px;
     margin: auto;
+}
+
+/* ===== REGISTER ====== */
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 50;
+  }
+
+.overlay .pop-up {
+    width: 80%;
+    border-radius: var(--border-radius);
+    margin: 2rem;
+    background-color: white;
+    max-width: 500px;
+}
+
+.form input[type="text"], .form input[type="number"], .form select {
+    border: 2px solid var(--night);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    font-family: var(--content-font);
+    font-size: 16pt;
+    margin: 2rem auto;
+    display: block;
+    width: 90%;
+}
+
+.form input[type="submit"] {
+    display: block;
+    margin: 2rem auto;
+    width: 60%;
+    font-family: var(--content-font);
+}
+
+.pop-up h2 {
+    text-align: center;
+    font-size: 18pt;
+    margin: 1rem;
+}
+
+.pop-up p {
+    text-align: center;
+    margin: 1rem;
+}
+
+.pop-up a {
+    text-decoration: underline;
+    color: var(--court-blue);
+}
+
+.exit {
+    background-color: white;
+    position: relative;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--night);
+    padding: 0 0.5rem 0 0.5rem;
+    margin: 1rem 0 0 1rem;
+    font-family: var(--display-font);
+    font-size: 20pt;
+    color: var(--dark-slate-gray);
+    z-index: 100;
+}
+
+.exit:hover {
+    background-color: var(--dark-slate-gray);
+    color: white;
+    transition: 0.3s;
+}
+
+
+/* ======= FIND PAGE ========== */
+
+.locationForm input[type="zip"] {
+    border: 2px solid var(--night);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    font-family: var(--content-font);
+    font-size: 16pt;
+    margin: 2rem auto;
+    width: 50%;
+}
+
+.locationForm {
+    margin: auto;
+}
+
+.location {
+    padding: 1rem;
+    box-shadow: 1px 1px 4px 1px var(--slate-gray);
+    margin: 1rem auto;
+    border-radius: var(--border-radius);
+}
+
+.horizontal-line {
+    height: 5px;
+    background-color: var(--court-blue);
+    width: 50%;
+    border-radius: var(--border-radius);
+    margin: 1rem auto 0;
+}
+
+.results {
+    margin: 1rem auto;
+}
+
+/* ==== RALLY CARD ===== */
+
+.rallyInfo {
+    width: 100%;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: 1px 1px 4px 1px var(--slate-gray);
+}
+
+.rallyInfoItems {
+    gap: 15px;
+    justify-content: space-evenly;
+}
+
+.rallyInfoItems li {
+    margin: 0.5rem 0 0.5rem 0;
+    font-family: var(--content-font);
+}
+
+/* ==== CREATE PAGE ==== */
+
+.createMain {
+    margin: auto;
+}
+
+.createForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+#name {
+    grid-column: 1 / 4;
 }

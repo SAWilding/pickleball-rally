@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+import Footer from "@/components/footer";
 import Header from "@/components/header";
 import React from "react";
 export default class Joined extends React.Component {
@@ -9,7 +10,10 @@ export default class Joined extends React.Component {
     return (
       <>
         <Header></Header>
-        <p>Welcom to the Joined page!</p>
+        <main>
+          <p>Welcom to the Joined page!</p>
+        </main>
+        <Footer></Footer>
       </>
     );
   }

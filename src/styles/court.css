@@ -37,12 +37,10 @@
     margin: auto;
     max-width: 1015px;
     height: 5px;
-    /* border: 1px solid black; */
 }
 
 
 .court-line-vertical {
-/* border: 1px solid black; */
 height: 400px;
 background-color: var(--court-lines);
 }
@@ -67,20 +65,20 @@ background-color: var(--court-lines);
 .ball {
     position: absolute;
     top: 5px;
-    height: 20px;
-    width: 20px;
+    height: 30px;
+    width: 30px;
     margin: 0;
-    background-color: var(--yellow);
+    /* background-color: var(--yellow); */
     border-radius: 100%;
     animation: bounce 5s infinite ease;
 }
 
 @keyframes bounce {
-    0%{left: 50px; top: -400px; opacity: 100;}
+    0%{left: 50px; top: -400px;}
     20%{left: 700px; top: 500px;}
     40%{left: 800px; top: -370px;}
     60%{left: 100px; top: 500px;}
     80%{left: 700px; top: -100px;}
-    90%{left: 750px; top: 500px; opacity: 100;}
+    90%{left: 750px; top: 500px;}
     100%{left: 50px; top: -400px;}
   }

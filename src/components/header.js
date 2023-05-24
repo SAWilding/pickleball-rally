@@ -8,18 +8,26 @@ import Link from "next/link";
 export default class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isVisibleLog: false,
+    };
   }
+
+  toggleVisibilityLog = () => {
+    this.setState({ isVisibleLog: !this.state.isVisibleLog });
+  };
 
   render() {
     return (
       <header>
-        <this.Logo></this.Logo>
-        <this.Navigation></this.Navigation>
-        <Button href="/find" content="Login"></Button>
+        {this.renderLogo()}
+        {this.renderNavigation()}
+        {this.state.isVisibleLog && this.renderLogin()}
+        <Button content="Login" action={this.toggleVisibilityLog}></Button>
       </header>
     );
   }
-  Navigation() {
+  renderNavigation() {
     return (
       <nav className="grow">
         <ul>
@@ -36,11 +44,45 @@ export default class Header extends React.Component {
       </nav>
     );
   }
-  Logo() {
+  renderLogo() {
+    return <Image src="/logo.png" alt="Logo image" className="logo" fill />;
+  }
+
+  renderLogin() {
     return (
-      <Link href="/">
-        <Image src="/next.svg" alt="Logo image" width={100} height={75} />
-      </Link>
+      <>
+        <section className="overlay">
+          <div className="pop-up">
+            <button className="exit" onClick={this.toggleVisibilityLog}>
+              X
+            </button>
+            <h2>Log into Your Pickleball Rally Account</h2>
+            <form action="." className="form">
+              <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Username"
+              />
+              <input
+                type="text"
+                name="password"
+                id="password"
+                placeholder="Password"
+              />
+              <input
+                type="submit"
+                id="submit"
+                value="Log In"
+                className="compButton"
+              />
+            </form>
+            <p>
+              Don't have an account? <a href="/">Create one here.</a>
+            </p>
+          </div>
+        </section>
+      </>
     );
   }
 }
