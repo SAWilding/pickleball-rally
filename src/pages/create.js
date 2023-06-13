@@ -2,6 +2,7 @@ import "@/app/globals.css";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import React from "react";
+import Map from "@/components/map";
 
 export default class Create extends React.Component {
   constructor(props) {
@@ -11,8 +12,7 @@ export default class Create extends React.Component {
       memberCount: 1,
       frequency: 0,
       skillLevel: "",
-      latitude: 43.82302377814921,
-      longitude: -111.79139248859552,
+      skillLevel: "Beginner",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -24,16 +24,15 @@ export default class Create extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
-    const { name, memberCount, frequency, skillLevel, latitude, longitude } =
-      this.state;
+    const { name, memberCount, frequency, skillLevel } = this.state;
     const data = {
       name: name,
       memberCount: memberCount,
       frequency: frequency,
       skillLevel: skillLevel,
-      latitude,
-      longitude,
+      latitude: localStorage.getItem("lat"),
+      longitude: localStorage.getItem("lng"),
+      address: localStorage.getItem("address"),
     };
 
     try {
@@ -74,23 +73,17 @@ export default class Create extends React.Component {
 
   renderForm() {
     return (
-      <form
-        onSubmit={this.handleSubmit}
-        method="post"
-        className="form createForm"
-      >
-        <label htmlFor="name">
-          Rally Name:
+      <>
+        <form onSubmit={this.handleSubmit} method="post" className="createForm">
+          <label htmlFor="name">Rally Name: </label>
           <input
             type="text"
             value={this.state.name}
             name="name"
-            id="name"
             onChange={this.handleChange}
           />
-        </label>
-        <label htmlFor="skillLevel">
-          Skill Level:
+
+          <label htmlFor="skillLevel">Skill Level:</label>
           <select
             name="skillLevel"
             id="skillLevel"
@@ -100,9 +93,8 @@ export default class Create extends React.Component {
             <option value="Intermediate">Intermediate</option>
             <option value="Expert">Expert</option>
           </select>
-        </label>
-        <label htmlFor="frequency">
-          Average Meetups Per Week
+
+          <label htmlFor="frequency">Average Meetups Per Week</label>
           <input
             type="number"
             value={this.state.frequency}
@@ -110,37 +102,10 @@ export default class Create extends React.Component {
             id="frequency"
             onChange={this.handleChange}
           />
-        </label>
-        <label htmlFor="latitude">
-          Latitude:
-          <input
-            type="number"
-            name="latitude"
-            value={this.state.latitude}
-            id="latitude"
-            onChange={this.handleChange}
-          />
-        </label>
-        <label htmlFor="longitude">
-          Longitute:
-          <input
-            type="number"
-            name="longitude"
-            value={this.state.longitude}
-            id="longitude"
-            onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" className="compButton" />
-      </form>
+          <Map></Map>
+          <input type="submit" className="compButton" />
+        </form>
+      </>
     );
   }
 }
-
-// {
-//   name: "Porker Park",
-//   frequency: 7,
-//   memberCount: 6,
-//   skillLevel: "beginner",
-//   location: [43.82302377814921, -111.79139248859552],
-// }

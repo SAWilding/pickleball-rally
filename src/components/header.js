@@ -1,4 +1,3 @@
-"use client";
 import "@/app/globals.css";
 import React from "react";
 import Image from "next/image";
@@ -9,27 +8,77 @@ export default class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isVisibleNav: false,
       isVisibleLog: false,
+      email: "",
+      password: "",
+      user: null,
+      isSessionLoaded: false,
+      loggedin: false,
     };
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    const user = sessionStorage.getItem("user");
+    const fullpathname = window.location.pathname;
+    const pathname = fullpathname.split("/").pop();
+    if (pathname != "" && user === null) {
+      window.alert("Please register/login first.");
+      window.location.href = "/";
+    }
+    if (user) {
+      this.setState({ user });
+    }
+    this.setState({ isSessionLoaded: true });
   }
 
   toggleVisibilityLog = () => {
     this.setState({ isVisibleLog: !this.state.isVisibleLog });
   };
 
+  toggleVisibilityNav = () => {
+    this.setState({ isVisibleNav: !this.state.isVisibleNav });
+  };
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  logout() {
+    sessionStorage.removeItem("user");
+    window.location.href = "/";
+  }
+
   render() {
+    const { user, isSessionLoaded } = this.state;
+
+    if (!isSessionLoaded) {
+      // Render a loading state or placeholder
+      return <div>Loading...</div>;
+    }
     return (
       <header>
         {this.renderLogo()}
-        {this.renderNavigation()}
+        {user && this.renderNavigation()}
         {this.state.isVisibleLog && this.renderLogin()}
-        <Button content="Login" action={this.toggleVisibilityLog}></Button>
+        {user ? (
+          <Button content="Logout" action={this.logout}></Button>
+        ) : (
+          <Button content="Login" action={this.toggleVisibilityLog}></Button>
+        )}
       </header>
     );
   }
+
   renderNavigation() {
+    return <nav className="grow">{this.renderLinks()}</nav>;
+  }
+
+  renderLinks() {
     return (
-      <nav className="grow">
+      <>
         <ul>
           <li>
             <Link href="/find">Find</Link>
@@ -41,11 +90,48 @@ export default class Header extends React.Component {
             <Link href="joined">Joined</Link>
           </li>
         </ul>
-      </nav>
+      </>
     );
   }
+
   renderLogo() {
-    return <Image src="/logo.png" alt="Logo image" className="logo" fill />;
+    return (
+      <Image
+        src="/PR-logo.png"
+        alt="Logo image"
+        className="logo"
+        width={200}
+        height={200}
+      />
+    );
+  }
+
+  async handleLogin(e) {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        // Redirect the user to a different page after successful login
+        this.toggleVisibilityLog();
+        console.log("Loggin succuess", data);
+        sessionStorage.setItem("user", data.user.uid);
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    }
   }
 
   renderLogin() {
@@ -57,18 +143,21 @@ export default class Header extends React.Component {
               X
             </button>
             <h2>Log into Your Pickleball Rally Account</h2>
-            <form action="." className="form">
+            <p>{this.message}</p>
+            <form action="/" className="form" onSubmit={this.handleLogin}>
               <input
-                type="text"
-                name="username"
-                id="username"
-                placeholder="Username"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Email"
+                onChange={this.handleChange}
               />
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
+                onChange={this.handleChange}
               />
               <input
                 type="submit"

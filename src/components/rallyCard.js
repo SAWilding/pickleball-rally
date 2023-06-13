@@ -5,6 +5,11 @@ import Button from "./button";
 export default class RallyCard extends React.Component {
   constructor(props) {
     super(props);
+    this.name = props.name;
+    this.memberCount = props.memberCount;
+    this.frequency = props.frequency;
+    this.skillLevel = props.skillLevel;
+    this.address = props.address;
   }
 
   render() {
@@ -14,19 +19,20 @@ export default class RallyCard extends React.Component {
           <div className="rallyInfo">
             <ul className="flex flex-wrap rallyInfoItems">
               <li>
-                Name: <span></span>
+                Name: <span>{this.name}</span>
               </li>
               <li>
-                Location: <span></span>
+                Address:
+                <span>{this.address}</span>
               </li>
               <li>
-                Members: <span></span>
+                Members: <span>{this.memberCount}</span>
               </li>
               <li>
-                Frequency: <span></span>
+                Frequency: <span>{this.frequency}</span>
               </li>
               <li>
-                Skill Level: <span></span>
+                Skill Level: <span>{this.skillLevel}</span>
               </li>
             </ul>
           </div>

@@ -6,17 +6,47 @@ import Header from "@/components/header";
 import Button from "@/components/button";
 import Footer from "@/components/footer";
 import React from "react";
+import { auth } from "../db/connect";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.user = props.user;
     this.state = {
       isVisibleReg: false,
+      email: "",
+      password: "",
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   toggleVisibilityReg = () => {
     this.setState({ isVisibleReg: !this.state.isVisibleReg });
   };
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    if (this.state.email && this.state.password != "") {
+      try {
+        createUserWithEmailAndPassword(
+          auth,
+          this.state.email,
+          this.state.password
+        );
+      } catch (err) {
+        console.log(err);
+      }
+      this.toggleVisibilityReg();
+    } else {
+      window.alert("Please enter an email and password.");
+    }
+  }
 
   render() {
     return (
@@ -82,18 +112,20 @@ export default class Home extends React.Component {
               X
             </button>
             <h2>Create a Pickleball Rally Account</h2>
-            <form action="." className="form">
+            <form action="." className="form" onSubmit={this.handleSubmit}>
               <input
                 type="text"
-                name="username"
-                id="username"
-                placeholder="Username"
+                name="email"
+                id="email"
+                placeholder="Email"
+                onChange={this.handleChange}
               />
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
+                onChange={this.handleChange}
               />
               <input
                 type="submit"

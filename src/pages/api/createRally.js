@@ -5,11 +5,18 @@ import { GeoPoint } from "@firebase/firestore";
 
 const collectionName = "rallies";
 
-export default async function createDocument(req, res) {
+export default async function createRally(req, res) {
   if (req.method === "POST") {
     try {
-      const { name, memberCount, frequency, skillLevel, latitude, longitude } =
-        req.body;
+      const {
+        name,
+        memberCount,
+        frequency,
+        skillLevel,
+        latitude,
+        longitude,
+        address,
+      } = req.body;
       // Create a new document in Firestore
       const docRef = await addDoc(collection(db, collectionName), {
         name,
@@ -17,6 +24,7 @@ export default async function createDocument(req, res) {
         frequency: parseInt(frequency),
         skillLevel,
         location: new GeoPoint(latitude, longitude),
+        address,
         datestamp: new Date().getTime(),
       });
 
