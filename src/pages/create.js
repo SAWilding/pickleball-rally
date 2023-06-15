@@ -34,26 +34,31 @@ export default class Create extends React.Component {
       longitude: localStorage.getItem("lng"),
       address: localStorage.getItem("address"),
     };
+    console.log(data.address);
+    if (data.address === "") {
+      console.log("Please select an address.");
+    } else {
+      try {
+        const response = await fetch("/api/createRally", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
 
-    try {
-      const response = await fetch("/api/createRally", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+        if (response.ok) {
+          console.log("Form submitted successfully");
 
-      if (response.ok) {
-        console.log("Form submitted successfully");
-        // Perform any additional actions after successful form submission
-      } else {
-        console.error("Form submission failed");
-        // Handle form submission errors
+          // Perform any additional actions after successful form submission
+        } else {
+          console.error("Form submission failed");
+          // Handle form submission errors
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        // Handle any network or other errors
       }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      // Handle any network or other errors
     }
   }
   render() {
@@ -81,6 +86,7 @@ export default class Create extends React.Component {
             value={this.state.name}
             name="name"
             onChange={this.handleChange}
+            required
           />
 
           <label htmlFor="skillLevel">Skill Level:</label>

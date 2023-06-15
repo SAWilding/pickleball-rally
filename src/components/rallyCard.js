@@ -1,43 +1,120 @@
-"use client";
 import React from "react";
 import Button from "./button";
 
 export default class RallyCard extends React.Component {
   constructor(props) {
     super(props);
-    this.name = props.name;
-    this.memberCount = props.memberCount;
-    this.frequency = props.frequency;
-    this.skillLevel = props.skillLevel;
-    this.address = props.address;
+    this.state = {
+      rallyId: props.id,
+      name: props.name,
+      memberCount: props.memberCount,
+      frequency: props.frequency,
+      skillLevel: props.skillLevel,
+      address: props.address,
+      lat: props.lat,
+      lng: props.lng,
+      isJoined: props.isJoined,
+    };
+    this.joinRally = this.joinRally.bind(this);
+    this.leaveRally = this.leaveRally.bind(this);
+  }
+
+  async joinRally(e) {
+    e.preventDefault();
+    const { rallyId } = this.state;
+    const data = {
+      userId: sessionStorage.getItem("user"),
+      rallyId: rallyId,
+    };
+
+    try {
+      const response = await fetch("/api/joinRally", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log("Form submitted successfully");
+
+        // Perform any additional actions after successful form submission
+      } else {
+        console.error("Form submission failed");
+        // Handle form submission errors
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Handle any network or other errors
+    }
+    window.location.reload();
+  }
+
+  async leaveRally(e) {
+    e.preventDefault();
+    const { rallyId } = this.state;
+    const data = {
+      userId: sessionStorage.getItem("user"),
+      rallyId: rallyId,
+    };
+
+    try {
+      const response = await fetch("/api/leaveRally", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log("Form submitted successfully");
+
+        // Perform any additional actions after successful form submission
+      } else {
+        console.error("Form submission failed");
+        // Handle form submission errors
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Handle any network or other errors
+    }
+    window.location.reload();
   }
 
   render() {
+    const { name, address, memberCount, frequency, skillLevel, isJoined } =
+      this.state;
+
     return (
       <>
         <section className="rallyCard flex">
           <div className="rallyInfo">
             <ul className="flex flex-wrap rallyInfoItems">
               <li>
-                Name: <span>{this.name}</span>
+                Name: <span>{name}</span>
               </li>
               <li>
-                Address:
-                <span>{this.address}</span>
+                Address: <span>{address}</span>
               </li>
               <li>
-                Members: <span>{this.memberCount}</span>
+                Members: <span>{memberCount}</span>
               </li>
               <li>
-                Frequency: <span>{this.frequency}</span>
+                Frequency: <span>{frequency}</span>
               </li>
               <li>
-                Skill Level: <span>{this.skillLevel}</span>
+                Skill Level: <span>{skillLevel}</span>
               </li>
             </ul>
           </div>
           <div>
-            <Button content="Join"></Button>
+            {isJoined ? (
+              <Button content="Leave" action={this.leaveRally} />
+            ) : (
+              <Button content="Join" action={this.joinRally} />
+            )}
           </div>
         </section>
       </>

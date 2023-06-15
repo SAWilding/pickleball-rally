@@ -167,7 +167,7 @@ export default class Header extends React.Component {
               />
             </form>
             <p>
-              Don't have an account? <a href="/">Create one here.</a>
+              Don&apos;t have an account? <a href="/">Create one here.</a>
             </p>
           </div>
         </section>

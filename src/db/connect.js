@@ -7,6 +7,7 @@ import {
   getDocs,
   query,
   where,
+  updateDoc,
 } from "@firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 
@@ -15,12 +16,12 @@ import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCjPMZQEc02v7sDOyk6ARuiet75HobqAh0",
-  authDomain: "pickleball-rally.firebaseapp.com",
-  projectId: "pickleball-rally",
-  storageBucket: "pickleball-rally.appspot.com",
-  messagingSenderId: "468738880005",
-  appId: "1:468738880005:web:3d3bb20a9e88b378f4626c",
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
 };
 
 // Initialize Firebase
@@ -38,4 +39,5 @@ module.exports = {
   getDocs,
   query,
   where,
+  updateDoc,
 };

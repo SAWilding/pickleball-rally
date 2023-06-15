@@ -8,12 +8,17 @@ export default class Find extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      joinedRallies: [],
       data: [],
       lat: 0,
       lng: 0,
       locationBoxIsVisible: true,
+      zip: 0,
     };
     this.fetchData = this.fetchData.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.fetchJoinedRallyIds = this.fetchJoinedRallyIds.bind(this);
   }
 
   componentDidMount() {
@@ -39,6 +44,25 @@ export default class Find extends React.Component {
     } else {
       console.log("Geolocation is not supported by this browser.");
     }
+    this.fetchJoinedRallyIds();
+  }
+
+  async fetchJoinedRallyIds() {
+    const userId = sessionStorage.getItem("user");
+    const data = { userId: userId };
+    try {
+      const response = await fetch(`/api/getJoinedRallyIds`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const rallyIds = await response.json();
+      this.setState({ joinedRallies: rallyIds });
+    } catch (error) {
+      console.log("Error fetching joined rallies", error);
+    }
   }
 
   async fetchData() {
@@ -47,7 +71,7 @@ export default class Find extends React.Component {
     if (lat != 0 && lng != 0) {
       try {
         const response = await fetch(
-          `/api/getRallies?latitude=${lat}&longitude=${lng}&distance=10`,
+          `/api/getRallies?latitude=${lat}&longitude=${lng}&distance=20`,
           { method: "GET" }
         );
         const data = await response.json();
@@ -58,6 +82,36 @@ export default class Find extends React.Component {
     } else {
       console.log("Could not find user's location.");
     }
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+    const apiKey = "AIzaSyAm5xibxmBd3pRkeXtKA_zuZjjyuh5StHE";
+    const zipCode = this.state.zip;
+
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "ZERO_RESULTS") {
+          console.log("Please enter a valid ZIP.");
+        } else {
+          const latitude = data.results[0].geometry.location.lat;
+          const longitude = data.results[0].geometry.location.lng;
+          this.setState({ lat: latitude });
+          this.setState({ lng: longitude }, () => {
+            this.fetchData();
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -82,8 +136,19 @@ export default class Find extends React.Component {
           </p>
           <div className="horizontal-line"></div>
           <div className="flex items-center">
-            <form action="" className="locationForm text-center">
-              <input type="zip" placeholder="Enter zip" />
+            <form
+              className="locationForm text-center"
+              onSubmit={this.handleSubmit}
+            >
+              <input
+                type="zip"
+                placeholder="Enter zip"
+                name="zip"
+                onChange={this.handleChange}
+                required
+                minLength={5}
+                maxLength={5}
+              />
               <input type="submit" className="compButton" />
             </form>
           </div>
@@ -93,22 +158,34 @@ export default class Find extends React.Component {
   }
 
   renderResults() {
-    const { data } = this.state;
+    const { data, joinedRallies } = this.state;
+
     return (
       <>
         <section className="results max-w-screen-lg">
           <p>Results:</p>
           <hr />
-          {data.map((rally) => (
-            <RallyCard
-              key={rally.id}
-              name={rally.name}
-              memberCount={rally.memberCount}
-              frequency={rally.frequency}
-              skillLevel={rally.skillLevel}
-              address={rally.address}
-            ></RallyCard>
-          ))}
+          {data.map((rally) => {
+            let isJoined = false;
+            if (joinedRallies.includes(rally.id)) {
+              console.log(isJoined);
+              isJoined = true;
+            }
+            return (
+              <RallyCard
+                key={rally.id}
+                id={rally.id}
+                name={rally.name}
+                memberCount={rally.memberCount}
+                frequency={rally.frequency}
+                skillLevel={rally.skillLevel}
+                address={rally.address}
+                lat={rally.location.latitude}
+                lng={rally.location.longitude}
+                isJoined={isJoined}
+              />
+            );
+          })}
         </section>
       </>
     );

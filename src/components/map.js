@@ -37,6 +37,7 @@ const MapComponent = () => {
   };
 
   const handleLoad = (event) => {
+    localStorage.setItem("address", "");
     const center = {
       lat: currentLocation ? currentLocation.lat : 37.7749,
       lng: currentLocation ? currentLocation.lng : -122.4194,
@@ -64,7 +65,7 @@ const MapComponent = () => {
   };
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyB5tcDtZt1OjCgOYQ8J8Vy7EZQCr0MWsqE",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
   });
 
   if (loadError) {
