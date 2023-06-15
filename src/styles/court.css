@@ -19,6 +19,13 @@
     width: 100%;
 }
 
+.create-account-btn {
+    height: 60px;
+    max-width: 300px;
+    display: block;
+    margin: 0.5rem auto;
+}
+
 .net {
     height: 5px;
     width: 100%;
@@ -30,7 +37,7 @@
     margin: auto;
     max-width: 1015px;
     display: grid;
-    grid-template-columns: 5px 500px 5px 500px 5px;
+    grid-template-columns: 1fr 100fr 1fr 100fr 1fr;
 }
 
 .court-line-horizontal {
@@ -46,6 +53,7 @@ background-color: var(--court-lines);
 }
 
 .court-square {
+    width: 100%;
     background-color: var(--court-squares);
 }
 
@@ -57,6 +65,7 @@ background-color: var(--court-lines);
 }
 
 .kitchen {
+    height: 175px;
     position: relative;
     max-width: 1005px;
     margin: auto;
@@ -73,12 +82,13 @@ background-color: var(--court-lines);
     animation: bounce 5s infinite ease;
 }
 
-@keyframes bounce {
-    0%{left: 50px; top: -400px;}
-    20%{left: 700px; top: 500px;}
-    40%{left: 800px; top: -370px;}
-    60%{left: 100px; top: 500px;}
-    80%{left: 700px; top: -100px;}
-    90%{left: 750px; top: 500px;}
-    100%{left: 50px; top: -400px;}
+  @keyframes bounce {
+    0% { left: 7%; top: -200%; }
+    20% { left: 80%; top: 250%; }
+    40% { left: 75%; top: -175%; }
+    60% { left: 35%; top: 210%; }
+    80% { left: 45%; top: -190%; }
+    90% { left: 75%; top: 215%; }
+    100% { left: 7%; top: -200%; }
   }
+  

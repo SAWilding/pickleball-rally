@@ -33,6 +33,7 @@ p {
 .logo {
     position: relative;
     top: -60px;
+    height: 200px;
     max-width: 200px;
     background-color: transparent;
 }
@@ -44,12 +45,17 @@ header {
     top: 0;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     margin: 1rem;
     height: 75px;
     margin: 0 auto;
     box-shadow: 1px 4px 15px 1px var(--slate-gray);
+}
+
+.account-btn {
+    margin: 0.5rem;
+    height: 60px;
+    width: 125px;
 }
 
 /* ======= NAVIGATION ====== */
@@ -59,20 +65,39 @@ nav>* {
 }
 
 nav>ul {
-    margin: 1.5rem;
     display: flex;
     justify-content: space-evenly;
 }
 
+.nav-link>a {
+    display: block;
+    margin: 0.25rem;
+    padding: 1rem;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.nav-link>a:hover {
+    .nav-pickleball {
+        display: inline;
+    }
+}
+
+.nav-pickleball {
+    display: none;
+    height: 30px;
+}
+
 /* ========== BUTTON ======== */
 .compButton {
+    height: 100%;
+    width: 100%;
+    min-height: 50px;
     font-family: var(--display-font);
     font-size: 16pt;
-    padding: .5rem;
     background-color: var(--yellow);
     box-shadow: 1px 1px 4px 1px var(--slate-gray);
     border-radius: var(--border-radius);
-    margin: 1rem;
 }
 
 .compButton:hover {
@@ -81,6 +106,9 @@ nav>ul {
     transition: 0.3s;
 }
 
+.compButton:not(:hover) {
+    transition: 0.3s;
+}
 /* ======= BODY ======== */
 
 main {
@@ -217,8 +245,13 @@ footer p {
 
 /* ==== RALLY CARD ===== */
 
+.rally-btn {
+    margin: 1rem;
+    width: 20%;
+}
+
 .rallyInfo {
-    width: 100%;
+    width: 80%;
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: var(--border-radius);
@@ -256,4 +289,10 @@ footer p {
     margin: 1rem auto;
     display: block;
     width: 90%;
+}
+
+.submit-btn {
+    max-width: 90%;
+    display: block;
+    margin: 1rem auto;
 }

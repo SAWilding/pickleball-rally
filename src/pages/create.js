@@ -1,4 +1,6 @@
 import "@/app/globals.css";
+import "@/styles/small.css";
+
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import React from "react";
@@ -85,6 +87,7 @@ export default class Create extends React.Component {
             type="text"
             value={this.state.name}
             name="name"
+            id="name"
             onChange={this.handleChange}
             required
           />
@@ -109,7 +112,7 @@ export default class Create extends React.Component {
             onChange={this.handleChange}
           />
           <Map></Map>
-          <input type="submit" className="compButton" />
+          <input type="submit" className="compButton submit-btn" />
         </form>
       </>
     );

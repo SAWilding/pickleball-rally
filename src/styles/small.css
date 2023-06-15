@@ -1,0 +1,27 @@
+@media (max-width: 800px) {
+    .call-to-action h1 {
+        font-size: 20pt;
+    }
+    main {
+        margin-top: 19rem;
+    }
+    header {
+        height: 275px;
+    }
+    nav>ul {
+        display: block;
+    }
+    nav>ul>li {
+        margin-top: 1rem;
+    }
+    .logo {
+        top: 25px;
+    }
+    .account-btn {
+        height: 95%;
+    }
+    .nav-link>a {
+        max-width: 200px;
+    }
+  }
+  

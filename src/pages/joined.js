@@ -1,4 +1,6 @@
 import "@/app/globals.css";
+import "@/styles/small.css";
+
 import Header from "@/components/header";
 import React from "react";
 import Footer from "@/components/footer";

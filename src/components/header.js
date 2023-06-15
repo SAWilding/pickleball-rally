@@ -63,11 +63,21 @@ export default class Header extends React.Component {
         {this.renderLogo()}
         {user && this.renderNavigation()}
         {this.state.isVisibleLog && this.renderLogin()}
-        {user ? (
-          <Button content="Logout" action={this.logout}></Button>
-        ) : (
-          <Button content="Login" action={this.toggleVisibilityLog}></Button>
-        )}
+        <div className="account-btn">
+          {user ? (
+            <Button
+              content="Logout"
+              action={this.logout}
+              className="account-btn"
+            ></Button>
+          ) : (
+            <Button
+              content="Login"
+              action={this.toggleVisibilityLog}
+              className="account-btn"
+            ></Button>
+          )}
+        </div>
       </header>
     );
   }
@@ -80,13 +90,28 @@ export default class Header extends React.Component {
     return (
       <>
         <ul>
-          <li>
+          <li className="nav-link">
+            <img
+              src="pickleball.png"
+              alt="pickleball"
+              className="nav-pickleball"
+            />
             <Link href="/find">Find</Link>
           </li>
-          <li>
+          <li className="nav-link">
+            <img
+              src="pickleball.png"
+              alt="pickleball"
+              className="nav-pickleball"
+            />
             <Link href="/create">Create</Link>
           </li>
-          <li>
+          <li className="nav-link">
+            <img
+              src="pickleball.png"
+              alt="pickleball"
+              className="nav-pickleball"
+            />
             <Link href="joined">Joined</Link>
           </li>
         </ul>

@@ -2,6 +2,7 @@
 
 import "@/app/globals.css";
 import "@/styles/court.css";
+import "@/styles/small.css";
 import Header from "@/components/header";
 import Button from "@/components/button";
 import Footer from "@/components/footer";
@@ -72,7 +73,7 @@ export default class Home extends React.Component {
               <h1>Join a Rally Near You!</h1>
             </div>
             <div className="net"></div>
-            <div>
+            <div className="create-account-btn">
               <Button
                 content="Create Account"
                 action={this.toggleVisibilityReg}

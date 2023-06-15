@@ -89,7 +89,7 @@ export default class RallyCard extends React.Component {
 
     return (
       <>
-        <section className="rallyCard flex">
+        <section className="rallyCard flex place-content-between">
           <div className="rallyInfo">
             <ul className="flex flex-wrap rallyInfoItems">
               <li>
@@ -109,7 +109,7 @@ export default class RallyCard extends React.Component {
               </li>
             </ul>
           </div>
-          <div>
+          <div className="rally-btn">
             {isJoined ? (
               <Button content="Leave" action={this.leaveRally} />
             ) : (
