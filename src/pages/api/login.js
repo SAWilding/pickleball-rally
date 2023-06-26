@@ -25,9 +25,11 @@ export default async function login(req, res) {
     if (snapshot.empty) {
       console.log("first time login");
       const dofRef = await addDoc(collectionRef, {
+        email: email,
         userId: user.uid,
         rallies: [],
         timestamp: new Date().getTime(),
+        lastRally: 0,
       });
     } else {
       console.log("Previous user");

@@ -135,9 +135,6 @@ export default class Home extends React.Component {
                 className="compButton"
               />
             </form>
-            <p>
-              Already have an account? <a href="/">Log in here.</a>
-            </p>
           </div>
         </section>
       </>

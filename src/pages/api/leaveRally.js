@@ -5,6 +5,8 @@ import {
   query,
   updateDoc,
   getDocs,
+  doc,
+  getDoc,
 } from "../../db/connect";
 
 const collectionName = "users";
@@ -14,7 +16,7 @@ export default async function leaveRally(req, res) {
     try {
       const { userId, rallyId } = req.body;
       console.log(req.body);
-      // Create a new document in Firestore
+      // Find the user document in Firestore
       const collectionRef = collection(db, collectionName);
       const q = query(collectionRef, where("userId", "==", userId));
       const snapshot = await getDocs(q);
@@ -37,6 +39,33 @@ export default async function leaveRally(req, res) {
           // Update the document with the new rallies array
           await updateDoc(userDoc.ref, { rallies: updatedRallies });
         }
+      }
+
+      // Decrement memberCount by 1
+      try {
+        const rallyCollectionRef = collection(db, "rallies");
+        const rallyRef = doc(rallyCollectionRef, rallyId);
+
+        const rallySnapshot = await getDoc(rallyRef);
+
+        if (!rallySnapshot.exists()) {
+          res.status(404).json({ error: "Rally not found" });
+          return;
+        }
+
+        const rallyData = rallySnapshot.data();
+        const newMemberCount = rallyData.memberCount - 1;
+        const memberList = rallyData.members || [];
+
+        const updatedMemberList = memberList.filter((id) => id !== userId);
+
+        await updateDoc(rallyRef, {
+          memberCount: newMemberCount,
+          members: updatedMemberList,
+        });
+      } catch (error) {
+        console.log("There was an error decrementing the member count.", error);
+        res.status(500).json({ error: "Failed to decrement member count" });
       }
       // Return the response
       res.status(204).end();

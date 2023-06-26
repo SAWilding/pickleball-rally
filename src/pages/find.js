@@ -185,6 +185,7 @@ export default class Find extends React.Component {
                 lat={rally.location.latitude}
                 lng={rally.location.longitude}
                 isJoined={isJoined}
+                onFindPage={true}
               />
             );
           })}

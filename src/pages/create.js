@@ -26,6 +26,7 @@ export default class Create extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault();
+    const userId = sessionStorage.getItem("user");
     const { name, memberCount, frequency, skillLevel } = this.state;
     const data = {
       name: name,
@@ -35,6 +36,8 @@ export default class Create extends React.Component {
       latitude: localStorage.getItem("lat"),
       longitude: localStorage.getItem("lng"),
       address: localStorage.getItem("address"),
+      creator: userId,
+      members: [userId],
     };
     console.log(data.address);
     if (data.address === "") {

@@ -98,7 +98,9 @@ export default class Joined extends React.Component {
                 address={rally.address}
                 lat={rally.location.latitude}
                 lng={rally.location.longitude}
+                members={rally.members}
                 isJoined={isJoined}
+                canRally={true}
               />
             );
           })}

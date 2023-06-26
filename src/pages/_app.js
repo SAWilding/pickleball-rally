@@ -1,4 +1,6 @@
 import React from "react";
+import { getMessaging } from "firebase/messaging";
+import { app } from "../db/connect";
 
 export default class App extends React.Component {
   constructor(props) {

@@ -5,6 +5,8 @@ import {
   query,
   updateDoc,
   getDocs,
+  doc,
+  getDoc,
 } from "../../db/connect";
 
 const collectionName = "users";
@@ -36,6 +38,33 @@ export default async function joinRally(req, res) {
           // Update the document with the new rallies array
           await updateDoc(userDoc.ref, { rallies: updatedRallies });
         }
+      }
+
+      // Increment the member count by 1 and add user to members
+      try {
+        const rallyCollectionRef = collection(db, "rallies");
+        const rallyRef = doc(rallyCollectionRef, rallyId);
+
+        const rallySnapshot = await getDoc(rallyRef);
+
+        if (!rallySnapshot.exists()) {
+          res.status(404).json({ error: "Rally not found" });
+          return;
+        }
+
+        const rallyData = rallySnapshot.data();
+        const newMemberCount = rallyData.memberCount + 1;
+
+        const memberList = rallyData.members || [];
+
+        const updatedMemberList = [...memberList, userId];
+
+        await updateDoc(rallyRef, {
+          memberCount: newMemberCount,
+          members: updatedMemberList,
+        });
+      } catch (error) {
+        console.log("There was an error incrementing the member count.", error);
       }
       // Return the document ID as the response
       res.status(201).json();

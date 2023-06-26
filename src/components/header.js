@@ -10,17 +10,26 @@ export default class Header extends React.Component {
     this.state = {
       isVisibleNav: false,
       isVisibleLog: false,
+      isVisibleDropdown: false,
       email: "",
       password: "",
       user: null,
       isSessionLoaded: false,
       loggedin: false,
+      windowSize: 0,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  handleResize = () => {
+    this.setState({ windowSize: window.innerWidth });
+  };
+
   componentDidMount() {
+    this.setState({ windowSize: window.innerWidth });
+    window.addEventListener("resize", this.handleResize);
+
     const user = sessionStorage.getItem("user");
     const fullpathname = window.location.pathname;
     const pathname = fullpathname.split("/").pop();
@@ -34,12 +43,20 @@ export default class Header extends React.Component {
     this.setState({ isSessionLoaded: true });
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
   toggleVisibilityLog = () => {
     this.setState({ isVisibleLog: !this.state.isVisibleLog });
   };
 
   toggleVisibilityNav = () => {
     this.setState({ isVisibleNav: !this.state.isVisibleNav });
+  };
+
+  toggleDropdown = () => {
+    this.setState({ isVisibleDropdown: !this.state.isVisibleDropdown });
   };
 
   handleChange(e) {
@@ -52,33 +69,79 @@ export default class Header extends React.Component {
   }
 
   render() {
-    const { user, isSessionLoaded } = this.state;
-
+    const { user, isSessionLoaded, windowSize } = this.state;
     if (!isSessionLoaded) {
-      // Render a loading state or placeholder
-      return <div>Loading...</div>;
+      return <div className="loading">Loading...</div>;
+    }
+    if (windowSize <= 800) {
+      return (
+        <>
+          <header>
+            <button className="drop-down-btn" onClick={this.toggleDropdown}>
+              <div className="hamburger">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="50"
+                  height="75"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </header>
+          {this.state.isVisibleDropdown && this.renderDropdown()}
+        </>
+      );
     }
     return (
       <header>
         {this.renderLogo()}
         {user && this.renderNavigation()}
         {this.state.isVisibleLog && this.renderLogin()}
-        <div className="account-btn">
-          {user ? (
-            <Button
-              content="Logout"
-              action={this.logout}
-              className="account-btn"
-            ></Button>
-          ) : (
-            <Button
-              content="Login"
-              action={this.toggleVisibilityLog}
-              className="account-btn"
-            ></Button>
-          )}
-        </div>
+        {this.renderAccountBtn()}
       </header>
+    );
+  }
+
+  renderAccountBtn() {
+    const { user } = this.state;
+    return (
+      <div className="account-btn">
+        {user ? (
+          <Button
+            content="Logout"
+            action={this.logout}
+            className="account-btn"
+          ></Button>
+        ) : (
+          <Button
+            content="Login"
+            action={this.toggleVisibilityLog}
+            className="account-btn"
+          ></Button>
+        )}
+      </div>
+    );
+  }
+
+  renderDropdownLoggedIn = () => {
+    return (
+      <>
+        {this.renderLinks()}
+        {this.renderAccountBtn()}
+      </>
+    );
+  };
+  renderDropdown() {
+    const { user } = this.state;
+    return (
+      <nav className="dropdown">
+        {user ? this.renderDropdownLoggedIn() : this.renderLogin()}
+      </nav>
     );
   }
 
@@ -191,9 +254,6 @@ export default class Header extends React.Component {
                 className="compButton"
               />
             </form>
-            <p>
-              Don&apos;t have an account? <a href="/">Create one here.</a>
-            </p>
           </div>
         </section>
       </>

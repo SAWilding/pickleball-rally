@@ -8,6 +8,8 @@ import {
   query,
   where,
   updateDoc,
+  doc,
+  getDoc,
 } from "@firebase/firestore";
 import { getAuth, signInWithEmailAndPassword } from "@firebase/auth";
 
@@ -31,6 +33,7 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 module.exports = {
+  app,
   db,
   auth,
   signInWithEmailAndPassword,
@@ -40,4 +43,6 @@ module.exports = {
   query,
   where,
   updateDoc,
+  doc,
+  getDoc,
 };
