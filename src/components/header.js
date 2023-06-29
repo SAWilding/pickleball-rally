@@ -216,6 +216,10 @@ export default class Header extends React.Component {
         console.log("Loggin succuess", data);
         sessionStorage.setItem("user", data.user.uid);
         window.location.reload();
+      } else {
+        window.alert(
+          "The email or password you entered were incorrect. Please try again."
+        );
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -238,13 +242,21 @@ export default class Header extends React.Component {
                 name="email"
                 id="email"
                 placeholder="Email"
+                required
+                // pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
                 onChange={this.handleChange}
               />
+              <p className="note">
+                Password must contain at least one number and one uppercase and
+                lowercase letter, and at least 8 or more characters
+              </p>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
+                // pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+                required
                 onChange={this.handleChange}
               />
               <input

@@ -237,7 +237,14 @@ footer p {
     transition: 0.3s;
 }
 
+  .reg>input:valid {
+    border-color: green;
+  }
 
+  .reg>input:invalid {
+    border-color: red;
+  }
+  
 /* ======= FIND PAGE ========== */
 
 .locationForm input[type="zip"] {
@@ -277,9 +284,10 @@ footer p {
 
 .rally-btn {
     margin: 1rem;
+}
+.rally-btns {
     width: 20%;
 }
-
 .rallyInfo {
     width: 80%;
     margin: 0.5rem;
@@ -342,4 +350,8 @@ footer p {
     max-width: 90%;
     display: block;
     margin: 1rem auto;
+}
+
+#address {
+    background-color: lightgray;
 }

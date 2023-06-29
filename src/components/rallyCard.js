@@ -52,8 +52,25 @@ export default class RallyCard extends React.Component {
   async sendEmails() {
     const data = {
       emails: this.state.emails,
-      subject: "This is a test",
-      message: "Hello, world!",
+      subject: "Pickleball is Calling!",
+      message: `There is a Rally occuring!  You can find your fellow players at:  ${this.state.address}`,
+      html: `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Pickleball Rally Email</title>
+        <style>
+          /* Add your CSS styles here */
+        </style>
+      </head>
+      <body>
+        <img src="https://pickleball-rally-deployment-atwf-25rpfmwdj-sawilding.vercel.app/_next/image?url=%2FPR-logo.png&w=256&q=75" alt="Logo image">
+        <h1>There is a Rally occuring!</h1>
+        <p>You can find your fellow players at: </p> 
+        <p>${this.state.address}</p>
+      </body>
+      </html>
+    `,
     };
     console.log(this.state.emails);
     try {
@@ -188,22 +205,24 @@ export default class RallyCard extends React.Component {
               </li>
             </ul>
           </div>
-          <div className="rally-btn">
-            {isJoined ? (
-              <Button content="Leave" action={this.leaveRally} />
-            ) : (
-              <Button content="Join" action={this.joinRally} />
-            )}
-          </div>
-          {this.state.onFindPage ? null : (
+          <div className="rally-btns">
             <div className="rally-btn">
-              {this.state.isActive && this.state.canRally ? (
-                <Button content="Rally" action={this.callRally} />
+              {isJoined ? (
+                <Button content="Leave" action={this.leaveRally} />
               ) : (
-                <CountdownTimer duration={30 * 60} />
+                <Button content="Join" action={this.joinRally} />
               )}
             </div>
-          )}
+            {this.state.onFindPage ? null : (
+              <div className="rally-btn">
+                {this.state.isActive && this.state.canRally ? (
+                  <Button content="Rally" action={this.callRally} />
+                ) : (
+                  <CountdownTimer duration={30 * 60} />
+                )}
+              </div>
+            )}
+          </div>
         </section>
       </>
     );

@@ -12,7 +12,7 @@ export default async (req, res) => {
       },
     };
 
-    const { emails, subject, message } = req.body;
+    const { emails, subject, message, html } = req.body;
 
     try {
       // Create a Nodemailer transporter
@@ -25,6 +25,7 @@ export default async (req, res) => {
           to: email,
           subject,
           text: message,
+          html: html,
         });
       }
 

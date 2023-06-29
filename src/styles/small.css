@@ -79,6 +79,15 @@
     .account-btn {
         margin-left: 3.5rem;
     }
+    .rally-btn {
+        padding: 1rem 0 1rem 0;
+    }
+    .rally-btns {
+        width: auto;
+    }
+    .rallyInfo {
+        margin: 0.5rem 0 0.5rem 0;
+    }
   }
   
 

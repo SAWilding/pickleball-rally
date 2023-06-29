@@ -8,6 +8,7 @@ import {
   getDocs,
 } from "../../db/connect";
 import { GeoPoint } from "@firebase/firestore";
+import { trim } from "validator";
 
 // Create a Rally
 
@@ -30,7 +31,7 @@ export default async function createRally(req, res) {
       // Create a new document in Firestore
       const docRef = await addDoc(collection(db, collectionName), {
         creator,
-        name,
+        name: trim(name),
         memberCount: parseInt(memberCount),
         members,
         frequency: parseInt(frequency),
