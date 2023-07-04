@@ -31,11 +31,18 @@ export default async function getEmail(req, res) {
         return res.status(404).json({ error: "Caller not found." });
       }
 
-      const canContinue = isTimeoutOver(callerDoc.data().lastRally, 10000);
+      const [canContinue, timePassed] = isTimeoutOver(
+        callerDoc.data().lastRally,
+        30 * 60 * 1000
+      );
       console.log(canContinue);
+      console.log(timePassed);
       if (!canContinue) {
         console.log("You cannont continue!");
-        return res.status(403).json({ error: "The timeout has not finished." });
+        return res.status(403).json({
+          error: "The timeout has not finished.",
+          timeRemaining: timePassed,
+        });
       }
 
       await updateLastRally(callerDoc);

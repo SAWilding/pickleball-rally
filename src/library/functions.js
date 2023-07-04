@@ -1,14 +1,15 @@
 function isTimeoutOver(timestamp, waitTime) {
   if (timestamp === 0) {
-    return true;
+    return [true, 0];
   }
   const timeNow = new Date().getTime();
 
   const timePassed = timeNow - timestamp;
   if (timePassed > waitTime) {
-    return true;
+    return [true, waitTime];
   } else {
-    return false;
+    const timeRemaining = waitTime - timePassed;
+    return [false, timeRemaining];
   }
 }
 

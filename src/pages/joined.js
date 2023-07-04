@@ -66,6 +66,9 @@ export default class Joined extends React.Component {
         <Header></Header>
         <main>
           <h1 className="text-center">Your Rallies</h1>
+          <p className="instruct">
+            You are allowed 1 rally call every 30 minutes.
+          </p>
           {this.renderResults()}
         </main>
         <Footer></Footer>

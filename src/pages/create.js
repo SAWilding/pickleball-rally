@@ -54,7 +54,7 @@ export default class Create extends React.Component {
 
         if (response.ok) {
           console.log("Form submitted successfully");
-
+          window.location.href = "/joined";
           // Perform any additional actions after successful form submission
         } else {
           console.error("Form submission failed");

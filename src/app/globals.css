@@ -30,6 +30,12 @@ p {
     font-family: var(--content-font);
 }
 
+.instruct {
+    margin: 1rem auto;
+    max-width: 1024px;
+
+}
+
 .logo {
     position: relative;
     top: -60px;

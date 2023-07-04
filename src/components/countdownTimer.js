@@ -38,9 +38,11 @@ class CountdownTimer extends React.Component {
   formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
-    return `${minutes.toString().padStart(2, "0")}:${seconds
+    const formatted = `${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
+
+    return formatted.substring(0, 5);
   };
 
   render() {
