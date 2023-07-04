@@ -115,7 +115,7 @@ export default class RallyCard extends React.Component {
                       <table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">
                           <tr>
                               <td align="center" style="padding:0px 0 30px 0;background:#70bbd9;">
-                                  <img src="https://pickleball-rally-deployment-atwf-25rpfmwdj-sawilding.vercel.app/_next/image?url=%2FPR-logo.png&w=256&q=75" alt="" width="300" style="height:auto;display:block;" />
+                                  <img src="https://pickleball-rally.vercel.app/_next/image?url=%2FPR-logo.png&w=256&q=75" alt="" width="300" style="height:auto;display:block;" />
                               </td>
                           </tr>
                           <tr>
