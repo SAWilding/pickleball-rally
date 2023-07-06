@@ -1,0 +1,9 @@
+{
+    "help-messages": {
+      "home": "<h2>Welcome to Pickleball Rally!</h2><p id='help-p'>Pickleball Rally allows you to connect with pickleball players in your area through player groups called Rallies.  Calling a Rally notifies all of the members that a pickleball match is trying to be organized at the Rally's location. Create an account to join Rallies in your area. Once you are logged in, you can navigate to the other pages:<ul><li>Find - Search for and join Rallies in your area.</li> <li>Create - Create your own Rallies.</li><li>Joined - View your joined Rallies and call other players to a match.</li></ul></p> ",
+      "find": "<h2>Welcome to the Find page!</h2><p id='help-p'>Find other players in your area based on your device's location or your ZIP code.  Once you have found a Rally that suites you, you can click the \"Join\" button.  All joined Rallies can be viewed on the Joined page.  You can also leave a Rally whenever you are no longer interested by clicking the \"Leave\" button.</p>",
+      "create": "<h2>Welcome to the Create page!</h2><p id='help-p'>Create your own Rallies for others in the area to join.  You can select the location where players should meeting up by clicking on a location on the map.  The address will be stored in the field below.  Once the Rally is created, it will be visible to other users in your area and can be joined.  Creating a Rally redirects you to the Joined page.</p>",
+      "joined": "<h2>Welcome to the Joined page!</h2><p id='help-p'>View, leave, and call Rallies for your already joined Rallies.  When the \"Rally\" button is clicked, it notifies all of the members via email that a Rally is occuring.  You are allowed to call a Rally <strong>once every 30 minutes.</strong></p>"
+    }
+  }
+  

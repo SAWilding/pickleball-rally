@@ -3,6 +3,7 @@ import React from "react";
 import Image from "next/image";
 import Button from "./button";
 import Link from "next/link";
+import { auth, signInWithPopup, GoogleAuthProvider } from "../db/connect";
 
 export default class Header extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class Header extends React.Component {
       isSessionLoaded: false,
       loggedin: false,
       windowSize: 0,
+      isGoogleLogin: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -194,37 +196,84 @@ export default class Header extends React.Component {
     );
   }
 
-  async handleLogin(e) {
-    e.preventDefault();
-
+  async handleLogin() {
     try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password,
-        }),
-      });
+      // Check if the user is logging in with Google
+      if (this.state.isGoogleLogin) {
+        const provider = new GoogleAuthProvider();
+        const result = await signInWithPopup(auth, provider);
 
-      const data = await response.json();
-      if (data.success) {
-        // Redirect the user to a different page after successful login
-        this.toggleVisibilityLog();
-        console.log("Loggin succuess", data);
-        sessionStorage.setItem("user", data.user.uid);
+        const userId = result.user.uid;
+        const email = result.user.email;
+        this.setState({ email: email });
+        sessionStorage.setItem("user", userId);
+        await this.checkNewGoogleUser();
         window.location.reload();
       } else {
-        window.alert(
-          "The email or password you entered were incorrect. Please try again."
-        );
+        // The user is logging in with email and password
+        const response = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: this.state.email,
+            password: this.state.user,
+          }),
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          // Redirect the user to a different page after successful login
+          this.toggleVisibilityLog();
+          console.log("Login success", data);
+          sessionStorage.setItem("user", data.user.uid);
+          window.location.reload();
+        } else {
+          window.alert(
+            "The email or password you entered was incorrect. Please try again."
+          );
+        }
       }
     } catch (error) {
       console.error("Login error:", error);
     }
   }
+
+  checkNewGoogleUser = async () => {
+    const response = await fetch("/api/checkNewUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: sessionStorage.getItem("user"),
+        email: this.state.email,
+      }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      console.log("Successfully checked for new Google user.");
+    } else {
+      window.alert(
+        "There was an error logging in with Google.  Please use another login option."
+      );
+    }
+  };
+
+  handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    this.setState({ isGoogleLogin: true }, () => {
+      this.handleLogin();
+    });
+  };
+
+  handleNormalLogin = async (e) => {
+    e.preventDefault();
+    this.setState({ isGoogleLogin: false }, () => {
+      this.handleLogin();
+    });
+  };
 
   renderLogin() {
     return (
@@ -236,7 +285,7 @@ export default class Header extends React.Component {
             </button>
             <h2>Log into Your Pickleball Rally Account</h2>
             <p>{this.message}</p>
-            <form action="/" className="form" onSubmit={this.handleLogin}>
+            <form action="/" className="form" onSubmit={this.handleNormalLogin}>
               <input
                 type="email"
                 name="email"
@@ -266,6 +315,12 @@ export default class Header extends React.Component {
                 className="compButton"
               />
             </form>
+            <hr style={{ borderColor: "black" }} />
+            <p>or</p>
+            <button onClick={this.handleGoogleLogin} className="google-login">
+              <img src="/googleIcon.png" className="google-icon"></img>Login
+              with Google
+            </button>
           </div>
         </section>
       </>

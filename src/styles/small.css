@@ -38,7 +38,9 @@
         top: 25px;
     }
     .account-btn {
-        height: 95%;
+        display: block;
+        width: 90%;
+        margin: 1rem auto;
     }
     .nav-link>a {
         max-width: 200px;
@@ -62,7 +64,7 @@
     }
     .dropdown {
         z-index: 4;
-        top: 220px;
+        top: 350px;
         background-color: white;
         position: fixed;
         left: 50%;
@@ -73,11 +75,22 @@
         margin: 0 auto;
         animation: slide-down 0.3s ease-in-out;
     }
+
+    .dropdown ul {
+        padding-top: 20px;
+    }
+
+    .dropdown ul li a {
+        padding: 50px 0;
+        background-color: var(--slate-gray);
+        margin: 1rem auto;
+        max-width: 90%;
+        border-radius: var(--border-radius);
+    }
     .overlay .pop-up {
         padding-top: 3rem;
-    }
-    .account-btn {
-        margin-left: 3.5rem;
+        width: 100%;
+        margin: 0;
     }
     .rally-btn {
         padding: 1rem 0 1rem 0;
@@ -88,10 +101,16 @@
     .rallyInfo {
         margin: 0.5rem 0 0.5rem 0;
     }
+    #help-home {
+        right: 85%;
+    }
+    button {
+        font-family: var(--content-font);
+    }
   }
   
 
   @keyframes slide-down {
     0% {top: -100px;}
-    100% {top: 220px;}
+    100% {top: 350px;}
   }

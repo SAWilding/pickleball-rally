@@ -3,10 +3,12 @@
 import "@/app/globals.css";
 import "@/styles/court.css";
 import "@/styles/small.css";
+import Help from "@/components/help";
 import Header from "@/components/header";
 import Button from "@/components/button";
 import Footer from "@/components/footer";
 import React from "react";
+import helpMessage from "../library/help-message.json";
 import { auth } from "../db/connect";
 import {
   createUserWithEmailAndPassword,
@@ -21,6 +23,7 @@ export default class Home extends React.Component {
       isVisibleReg: false,
       email: "",
       password: "",
+      helpMessage: helpMessage["help-messages"]["home"],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -40,7 +43,6 @@ export default class Home extends React.Component {
         if (signInMethods.length > 0) {
           // User account with this email already exists
           console.log("User account with this email already exists.");
-          // You can handle the case here as needed, such as showing an error message.
         } else {
           // User account with this email does not exist
           return createUserWithEmailAndPassword(auth, email, password);
@@ -105,6 +107,7 @@ export default class Home extends React.Component {
         <main>
           {this.state.isVisibleReg && this.renderRegister()}
           {this.renderCourtHalf()}
+
           {this.renderCallToAction()}
           {this.renderCourtHalf()}
         </main>
@@ -119,7 +122,10 @@ export default class Home extends React.Component {
         <div className="kitchen">
           <section className="call-to-action">
             <div>
-              <h1>Join a Rally Near You!</h1>
+              <h1>
+                Join a Rally Near You!
+                <Help id="help-home" message={this.state.helpMessage}></Help>
+              </h1>
             </div>
             <div className="net"></div>
             <div className="create-account-btn">

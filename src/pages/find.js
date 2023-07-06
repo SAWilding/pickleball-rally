@@ -5,6 +5,8 @@ import Header from "@/components/header";
 import React from "react";
 import Footer from "@/components/footer";
 import RallyCard from "@/components/rallyCard";
+import Help from "@/components/help";
+import helpMessage from "../library/help-message.json";
 
 export default class Find extends React.Component {
   constructor(props) {
@@ -16,6 +18,7 @@ export default class Find extends React.Component {
       lng: 0,
       locationBoxIsVisible: true,
       zip: 0,
+      helpMessage: helpMessage["help-messages"]["find"],
     };
     this.fetchData = this.fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -121,7 +124,9 @@ export default class Find extends React.Component {
       <>
         <Header></Header>
         <main>
-          <h1 className="text-center">Find a Rally Near You</h1>
+          <h1 className="text-center">
+            Find a Rally Near You <Help message={this.state.helpMessage}></Help>
+          </h1>
           {this.state.locationBoxIsVisible && this.renderLocation()}
           {this.renderResults()}
         </main>

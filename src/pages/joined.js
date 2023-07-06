@@ -5,6 +5,8 @@ import Header from "@/components/header";
 import React from "react";
 import Footer from "@/components/footer";
 import RallyCard from "@/components/rallyCard";
+import Help from "@/components/help";
+import helpMessage from "../library/help-message.json";
 
 export default class Joined extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ export default class Joined extends React.Component {
     this.state = {
       joinedRallies: [],
       data: [],
+      helpMessage: helpMessage["help-messages"]["joined"],
     };
     this.fetchJoinedRallyIds = this.fetchJoinedRallyIds.bind(this);
     this.fetchJoinedRallies = this.fetchJoinedRallies.bind(this);
@@ -65,10 +68,9 @@ export default class Joined extends React.Component {
       <>
         <Header></Header>
         <main>
-          <h1 className="text-center">Your Rallies</h1>
-          <p className="instruct">
-            You are allowed 1 rally call every 30 minutes.
-          </p>
+          <h1 className="text-center">
+            Your Rallies <Help message={this.state.helpMessage}></Help>
+          </h1>
           {this.renderResults()}
         </main>
         <Footer></Footer>

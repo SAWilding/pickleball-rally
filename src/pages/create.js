@@ -5,6 +5,8 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import React from "react";
 import Map from "@/components/map";
+import Help from "@/components/help";
+import helpMessage from "../library/help-message.json";
 
 export default class Create extends React.Component {
   constructor(props) {
@@ -15,6 +17,7 @@ export default class Create extends React.Component {
       frequency: 0,
       skillLevel: "",
       skillLevel: "Beginner",
+      helpMessage: helpMessage["help-messages"]["create"],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -72,7 +75,9 @@ export default class Create extends React.Component {
         <Header></Header>
         <main>
           <section className="max-w-screen-lg createMain">
-            <h1 className="text-center">Create Your Rally</h1>
+            <h1 className="text-center">
+              Create Your Rally <Help message={this.state.helpMessage}></Help>
+            </h1>
             {this.renderForm()}
           </section>
         </main>

@@ -14,7 +14,8 @@ import {
 import {
   getAuth,
   signInWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from "@firebase/auth";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -49,4 +50,6 @@ module.exports = {
   updateDoc,
   doc,
   getDoc,
+  GoogleAuthProvider,
+  signInWithPopup,
 };
