@@ -9,7 +9,8 @@ import Button from "@/components/button";
 import Footer from "@/components/footer";
 import React from "react";
 import helpMessage from "../library/help-message.json";
-import { auth } from "../db/connect";
+import { auth, signInWithPopup, GoogleAuthProvider } from "../db/connect";
+
 import {
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
@@ -100,6 +101,44 @@ export default class Home extends React.Component {
     }
   }
 
+  checkNewGoogleUser = async () => {
+    const response = await fetch("/api/checkNewUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: sessionStorage.getItem("user"),
+        email: this.state.email,
+      }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      console.log("Successfully checked for new Google user.");
+    } else {
+      window.alert(
+        "There was an error logging in with Google.  Please use another login option."
+      );
+    }
+  };
+
+  handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+
+      const userId = result.user.uid;
+      const email = result.user.email;
+      this.setState({ email: email });
+      sessionStorage.setItem("user", userId);
+      await this.checkNewGoogleUser();
+      window.location.reload();
+    } catch (error) {
+      console.log("There was an error signing in with Google.", error);
+    }
+  };
+
   render() {
     return (
       <>
@@ -178,15 +217,12 @@ export default class Home extends React.Component {
                 pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
                 onChange={this.handleChange}
               />
-              <p className="note">
-                Password must contain at least one number and one uppercase and
-                lowercase letter, and at least 8 or more characters
-              </p>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
+                title="Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                 pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
                 required
                 onChange={this.handleChange}
@@ -198,6 +234,12 @@ export default class Home extends React.Component {
                 className="compButton"
               />
             </form>
+            <hr style={{ borderColor: "black" }} />
+            <p>or</p>
+            <button onClick={this.handleGoogleLogin} className="google-login">
+              <img src="/googleIcon.png" className="google-icon"></img>Login
+              with Google
+            </button>
           </div>
         </section>
       </>

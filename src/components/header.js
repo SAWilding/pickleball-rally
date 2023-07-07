@@ -295,16 +295,13 @@ export default class Header extends React.Component {
                 // pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
                 onChange={this.handleChange}
               />
-              <p className="note">
-                Password must contain at least one number and one uppercase and
-                lowercase letter, and at least 8 or more characters
-              </p>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Password"
-                // pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
+                title="Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$"
                 required
                 onChange={this.handleChange}
               />

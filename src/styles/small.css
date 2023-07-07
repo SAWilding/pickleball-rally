@@ -110,10 +110,6 @@
     button {
         font-family: var(--content-font);
     }
-    .note {
-        display: none;
-        font-size: 8pt;
-    }
     .pop-up h2 {
         font-size: 14pt;
     }
