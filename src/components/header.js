@@ -19,6 +19,7 @@ export default class Header extends React.Component {
       loggedin: false,
       windowSize: 0,
       isGoogleLogin: false,
+      googleTimeout: false,
     };
     this.handleLogin = this.handleLogin.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -263,9 +264,18 @@ export default class Header extends React.Component {
 
   handleGoogleLogin = async (e) => {
     e.preventDefault();
-    this.setState({ isGoogleLogin: true }, () => {
-      this.handleLogin();
-    });
+    this.setState(
+      {
+        isGoogleLogin: true,
+        googleTimeout: true,
+      },
+      () => {
+        this.handleLogin();
+        setTimeout(() => {
+          this.setState({ googleTimeout: false });
+        }, 10 * 1000);
+      }
+    );
   };
 
   handleNormalLogin = async (e) => {
@@ -314,10 +324,14 @@ export default class Header extends React.Component {
             </form>
             <hr style={{ borderColor: "black" }} />
             <p>or</p>
-            <button onClick={this.handleGoogleLogin} className="google-login">
-              <img src="/googleIcon.png" className="google-icon"></img>Login
-              with Google
-            </button>
+            {!this.state.googleTimeout ? (
+              <button onClick={this.handleGoogleLogin} className="google-login">
+                <img src="/googleIcon.png" className="google-icon"></img>Login
+                with Google
+              </button>
+            ) : (
+              <p className="google-loading">Loading...</p>
+            )}
           </div>
         </section>
       </>

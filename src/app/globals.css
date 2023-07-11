@@ -83,6 +83,18 @@ header {
     transition: .3s;
 }
 
+.google-loading {
+    display: block;
+    padding: 0.75rem;
+    margin: auto;
+    border-radius: var(--border-radius);
+    animation: loading 0.5s infinite;
+}
+
+footer a:hover {
+    color: var(--yellow);
+}
+
 /* HELP BUTTON */
 
 .help-btn {
@@ -93,7 +105,7 @@ header {
     /* opacity: 75%; */
     background-color: var(--slate-gray);
     color: white;
-    width: 30px;
+    width: 32px;
     border-radius: 100%;
     text-align: center;
     font-family: var(--content-font);
@@ -242,7 +254,6 @@ main {
 
 footer {
     color: white;
-    height: 200px;
     width: 100%;
     background-color: var(--night);
 }
@@ -250,6 +261,12 @@ footer {
 footer p {
     padding-top: 1rem;
     max-width: 1000px;
+    margin: auto;
+}
+
+.footer-resources {
+    padding: 1rem;
+    max-width: 1024px;
     margin: auto;
 }
 
@@ -340,13 +357,43 @@ footer p {
   
 /* ======= FIND PAGE ========== */
 
+.distance-section {
+    background-color: white;
+    position: relative;
+    z-index: 2;
+    max-width: 1024px;
+    margin: 0 auto;
+    box-shadow: 1px 1px 4px 1px var(--slate-gray);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.distance-slider {
+    width: 100%;
+}
+
+.distance-grid {
+    display: flex;
+}
+
+.distance-value {
+    text-align: center;
+    background-color: var(--court-blue);
+    padding: 0.5rem;
+    border-radius: var(--border-radius);
+    max-width: 100px;
+    color: white;
+    margin: 0.5rem;
+}
+
 .locationForm input[type="zip"] {
+    display: block;
     border: 2px solid var(--night);
     padding: 0.5rem;
     border-radius: var(--border-radius);
     font-family: var(--content-font);
     font-size: 16pt;
-    margin: 2rem auto;
+    margin: 0.5rem auto;
     width: 50%;
 }
 
@@ -355,6 +402,9 @@ footer p {
 }
 
 .location {
+    position: relative;
+    background-color: white;
+    z-index: 4;
     padding: 1rem;
     box-shadow: 1px 1px 4px 1px var(--slate-gray);
     margin: 1rem auto;
@@ -374,7 +424,17 @@ footer p {
 }
 
 /* ==== RALLY CARD ===== */
+.vertical-line {
+    max-height: 100%;
+    width: 1px;
+    background-color: var(--court-blue);
+}
 
+.rallyCard {
+    border-radius: var(--border-radius);
+    box-shadow: 1px 1px 4px 1px var(--slate-gray);
+    margin: 0.5rem 0;
+}
 .rally-btn {
     margin: 1rem;
 }
@@ -385,8 +445,6 @@ footer p {
     width: 80%;
     margin: 0.5rem;
     padding: 0.5rem;
-    border-radius: var(--border-radius);
-    box-shadow: 1px 1px 4px 1px var(--slate-gray);
 }
 
 .rallyInfoItems {

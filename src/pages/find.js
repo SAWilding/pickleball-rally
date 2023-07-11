@@ -19,6 +19,8 @@ export default class Find extends React.Component {
       locationBoxIsVisible: true,
       zip: 0,
       helpMessage: helpMessage["help-messages"]["find"],
+      distance: 20,
+      isLocationAllowed: false,
     };
     this.fetchData = this.fetchData.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -38,6 +40,7 @@ export default class Find extends React.Component {
               locationBoxIsVisible: !this.state.locationBoxIsVisible,
             },
             () => {
+              this.setState({ isLocationAllowed: true });
               this.fetchData();
             }
           );
@@ -73,11 +76,15 @@ export default class Find extends React.Component {
   async fetchData() {
     const lat = this.state.lat;
     const lng = this.state.lng;
+    const distance = this.state.distance;
     if (lat != 0 && lng != 0) {
       try {
         const response = await fetch(
-          `/api/getRallies?latitude=${lat}&longitude=${lng}&distance=20`,
+          `/api/getRallies?latitude=${lat}&longitude=${lng}&distance=${distance}`,
           { method: "GET" }
+        );
+        console.log(
+          `/api/getRallies?latitude=${lat}&longitude=${lng}&distance=${distance}`
         );
         const data = await response.json();
         this.setState({ data });
@@ -91,8 +98,11 @@ export default class Find extends React.Component {
 
   async handleSubmit(e) {
     e.preventDefault();
-    const apiKey = "AIzaSyAm5xibxmBd3pRkeXtKA_zuZjjyuh5StHE";
+    const apiKey = process.env.NEXT_PUBLIC_GEO_API_KEY;
     const zipCode = this.state.zip;
+    if (zipCode.length != 5) {
+      return window.alert("Please enter a valid ZIP code.");
+    }
 
     const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=${apiKey}`;
 
@@ -128,6 +138,7 @@ export default class Find extends React.Component {
             Find a Rally Near You <Help message={this.state.helpMessage}></Help>
           </h1>
           {this.state.locationBoxIsVisible && this.renderLocation()}
+          {this.renderDistanceSelect()}
           {this.renderResults()}
         </main>
         <Footer></Footer>
@@ -143,10 +154,7 @@ export default class Find extends React.Component {
           </p>
           <div className="horizontal-line"></div>
           <div className="flex items-center">
-            <form
-              className="locationForm text-center"
-              onSubmit={this.handleSubmit}
-            >
+            <div className="locationForm">
               <input
                 type="zip"
                 placeholder="Enter zip"
@@ -156,8 +164,7 @@ export default class Find extends React.Component {
                 minLength={5}
                 maxLength={5}
               />
-              <input type="submit" className="compButton" />
-            </form>
+            </div>
           </div>
         </section>
       </>
@@ -194,6 +201,53 @@ export default class Find extends React.Component {
               />
             );
           })}
+        </section>
+      </>
+    );
+  }
+
+  handleDisanceSubmit = (e) => {
+    e.preventDefault();
+    this.fetchData();
+  };
+
+  handleSlider = (e) => {
+    this.setState({ distance: e.target.value });
+  };
+
+  renderDistanceSelect() {
+    return (
+      <>
+        <section className="distance-section">
+          <form
+            className="distance-form"
+            onSubmit={
+              this.state.isLocationAllowed
+                ? this.handleDisanceSubmit
+                : this.handleSubmit
+            }
+          >
+            <label htmlFor="slider">Search Radius:</label>
+            <div className="distance-grid">
+              <input
+                type="range"
+                id="slider"
+                name="slider"
+                className="distance-slider"
+                defaultValue={20}
+                step={5}
+                min={5}
+                max={100}
+                onChange={this.handleSlider}
+              />
+              <div className="distance-value">{this.state.distance} miles</div>
+            </div>
+            <input
+              type="submit"
+              value="Search"
+              className="compButton distance-submit"
+            />
+          </form>
         </section>
       </>
     );

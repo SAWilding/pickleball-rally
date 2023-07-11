@@ -25,6 +25,7 @@ export default class Home extends React.Component {
       email: "",
       password: "",
       helpMessage: helpMessage["help-messages"]["home"],
+      googleTimeout: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -124,6 +125,7 @@ export default class Home extends React.Component {
 
   handleGoogleLogin = async (e) => {
     e.preventDefault();
+    this.setState({ googleTimeout: true });
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
@@ -137,6 +139,9 @@ export default class Home extends React.Component {
     } catch (error) {
       console.log("There was an error signing in with Google.", error);
     }
+    setTimeout(() => {
+      this.setState({ googleTimeout: false });
+    }, 10 * 1000);
   };
 
   render() {
@@ -236,10 +241,14 @@ export default class Home extends React.Component {
             </form>
             <hr style={{ borderColor: "black" }} />
             <p>or</p>
-            <button onClick={this.handleGoogleLogin} className="google-login">
-              <img src="/googleIcon.png" className="google-icon"></img>Login
-              with Google
-            </button>
+            {!this.state.googleTimeout ? (
+              <button onClick={this.handleGoogleLogin} className="google-login">
+                <img src="/googleIcon.png" className="google-icon"></img>Login
+                with Google
+              </button>
+            ) : (
+              <p className="google-loading">Loading...</p>
+            )}
           </div>
         </section>
       </>

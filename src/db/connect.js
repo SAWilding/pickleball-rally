@@ -10,6 +10,7 @@ import {
   updateDoc,
   doc,
   getDoc,
+  deleteDoc,
 } from "@firebase/firestore";
 import {
   getAuth,
@@ -52,4 +53,5 @@ module.exports = {
   getDoc,
   GoogleAuthProvider,
   signInWithPopup,
+  deleteDoc,
 };

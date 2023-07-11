@@ -7,6 +7,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  deleteDoc,
 } from "../../db/connect";
 
 const collectionName = "users";
@@ -59,10 +60,14 @@ export default async function leaveRally(req, res) {
 
         const updatedMemberList = memberList.filter((id) => id !== userId);
 
-        await updateDoc(rallyRef, {
-          memberCount: newMemberCount,
-          members: updatedMemberList,
-        });
+        if (newMemberCount <= 0) {
+          deleteDoc(rallyRef);
+        } else {
+          await updateDoc(rallyRef, {
+            memberCount: newMemberCount,
+            members: updatedMemberList,
+          });
+        }
       } catch (error) {
         console.log("There was an error decrementing the member count.", error);
         res.status(500).json({ error: "Failed to decrement member count" });

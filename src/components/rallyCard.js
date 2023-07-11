@@ -138,7 +138,7 @@ export default class RallyCard extends React.Component {
                                       <tr>
                                           <td style="padding:0;width:50%;" align="left">
                                               <p style="margin:0;font-size:14px;line-height:16px;font-family:Arial,sans-serif;color:#00000;">
-                                                  &reg; Seth Wilding 2023<br/><a href="https://pickleball-rally-deployment-atwf.vercel.app/" style="color:#000000;text-decoration:underline;">Leave Rally</a>
+                                                  &copy; Seth Wilding 2023<br/><a href="https://pickleball-rally.vercel.app/" style="color:#000000;text-decoration:underline;">Leave Rally</a>
                                               </p>
                                           </td>
                                       </tr>
@@ -280,6 +280,7 @@ export default class RallyCard extends React.Component {
               </li>
             </ul>
           </div>
+          <div className="vertical-line"></div>
           <div className="rally-btns">
             <div className="rally-btn">
               {isJoined ? (

@@ -96,7 +96,9 @@
         margin: 0;
     }
     .rally-btn {
-        padding: 1rem 0 1rem 0;
+        margin: 1rem 0.5rem 1rem;
+        padding: 1rem 0 1rem;
+        width: 100px;
     }
     .rally-btns {
         width: auto;
