@@ -137,7 +137,6 @@ export default class Find extends React.Component {
           <h1 className="text-center">
             Find a Rally Near You <Help message={this.state.helpMessage}></Help>
           </h1>
-          {this.state.locationBoxIsVisible && this.renderLocation()}
           {this.renderDistanceSelect()}
           {this.renderResults()}
         </main>
@@ -149,13 +148,11 @@ export default class Find extends React.Component {
     return (
       <>
         <section className="max-w-screen-lg location">
-          <p className="text-center">
-            Allow us to use your location <br /> or
-          </p>
-          <div className="horizontal-line"></div>
           <div className="flex items-center">
             <div className="locationForm">
+              <label htmlFor="zip">Zip Code:</label>
               <input
+                id="zip"
                 type="zip"
                 placeholder="Enter zip"
                 name="zip"
@@ -182,7 +179,6 @@ export default class Find extends React.Component {
           {data.map((rally) => {
             let isJoined = false;
             if (joinedRallies.includes(rally.id)) {
-              console.log(isJoined);
               isJoined = true;
             }
             return (
@@ -227,21 +223,32 @@ export default class Find extends React.Component {
                 : this.handleSubmit
             }
           >
-            <label htmlFor="slider">Search Radius:</label>
-            <div className="distance-grid">
-              <input
-                type="range"
-                id="slider"
-                name="slider"
-                className="distance-slider"
-                defaultValue={20}
-                step={5}
-                min={5}
-                max={100}
-                onChange={this.handleSlider}
-              />
-              <div className="distance-value">{this.state.distance} miles</div>
+            {this.state.locationBoxIsVisible && this.renderLocation()}
+
+            {this.state.locationBoxIsVisible && (
+              <div className="vertical-line"></div>
+            )}
+            <div className="slider-box">
+              <label htmlFor="slider">Search Radius:</label>
+              <div className="distance-grid">
+                <input
+                  type="range"
+                  id="slider"
+                  name="slider"
+                  className="distance-slider"
+                  defaultValue={20}
+                  step={5}
+                  min={5}
+                  max={100}
+                  onChange={this.handleSlider}
+                />
+                <div className="distance-value">
+                  {this.state.distance} miles
+                </div>
+              </div>
             </div>
+            <div className="vertical-line"></div>
+
             <input
               type="submit"
               value="Search"

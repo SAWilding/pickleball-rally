@@ -357,6 +357,13 @@ footer p {
   
 /* ======= FIND PAGE ========== */
 
+.distance-form {
+    display: flex;
+    justify-content: space-evenly;
+    align-content: stretch;
+    flex-wrap: wrap;
+}
+
 .distance-section {
     background-color: white;
     position: relative;
@@ -364,8 +371,13 @@ footer p {
     max-width: 1024px;
     margin: 0 auto;
     box-shadow: 1px 1px 4px 1px var(--slate-gray);
-    padding: 1rem;
     border-radius: var(--border-radius);
+}
+
+.distance-submit {
+    margin: 3rem 0 3rem;
+    max-height: 100px;
+    max-width: 30%;
 }
 
 .distance-slider {
@@ -386,6 +398,11 @@ footer p {
     margin: 0.5rem;
 }
 
+.slider-box {
+    width: 30%;
+    padding: 2rem 0 2rem;
+}
+
 .locationForm input[type="zip"] {
     display: block;
     border: 2px solid var(--night);
@@ -394,21 +411,16 @@ footer p {
     font-family: var(--content-font);
     font-size: 16pt;
     margin: 0.5rem auto;
-    width: 50%;
+    width: 100%;
 }
 
 .locationForm {
+    padding: 2rem 0 2rem;
     margin: auto;
 }
 
 .location {
-    position: relative;
     background-color: white;
-    z-index: 4;
-    padding: 1rem;
-    box-shadow: 1px 1px 4px 1px var(--slate-gray);
-    margin: 1rem auto;
-    border-radius: var(--border-radius);
 }
 
 .horizontal-line {
@@ -472,6 +484,15 @@ footer p {
 .rallyInfoItems li {
     margin: 0.5rem 0 0.5rem 0;
     font-family: var(--content-font);
+}
+
+.leave {
+    background-color: rgb(209, 181, 181);
+}
+
+.join {
+    background-color: var(--court-blue);
+    color: white;
 }
 
 /* ==== CREATE PAGE ==== */

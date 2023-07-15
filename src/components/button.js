@@ -9,6 +9,7 @@ export default class Button extends React.Component {
     this.action = props.action || null;
     this.href = props.href || "#";
     this.content = props.content || "Add content here.";
+    this.className = props.className + " compButton";
     this.state = {
       count: 0,
     };
@@ -16,7 +17,7 @@ export default class Button extends React.Component {
   render() {
     return (
       <Link href={this.href}>
-        <button className="compButton" onClick={this.action}>
+        <button className={this.className} onClick={this.action}>
           <span>{this.content}</span>
         </button>
       </Link>

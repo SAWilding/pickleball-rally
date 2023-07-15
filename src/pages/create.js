@@ -96,6 +96,7 @@ export default class Create extends React.Component {
             value={this.state.name}
             name="name"
             id="name"
+            maxLength={50}
             onChange={this.handleChange}
             required
           />

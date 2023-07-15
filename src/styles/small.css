@@ -118,6 +118,18 @@
     .help-message p, .help-message ul li {
         font-size: 12pt;
     }
+    .distance-form {
+        display: block;
+        padding: 1rem;
+    }
+    .distance-submit {
+        margin: 0.5rem 0 0.5rem;
+        max-width: 100%;
+    }
+    .slider-box {
+        padding: 0.5rem 0 0.5rem;
+        width: 100%;
+    }
   }
   
 

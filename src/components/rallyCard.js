@@ -47,14 +47,10 @@ export default class RallyCard extends React.Component {
   }
 
   setButtonInactive = () => {
-    this.setState({ isActive: false }, () => {
-      console.log(this.state.isActive);
-    });
+    this.setState({ isActive: false }, () => {});
     // Set a timeout to reactivate the button after 30 minutes
     setTimeout(() => {
-      this.setState({ isActive: true }, () => {
-        console.log(this.state.isActive);
-      });
+      this.setState({ isActive: true }, () => {});
     }, this.state.timeout); // 30 minutes in milliseconds
   };
 
@@ -284,9 +280,17 @@ export default class RallyCard extends React.Component {
           <div className="rally-btns">
             <div className="rally-btn">
               {isJoined ? (
-                <Button content="Leave" action={this.leaveRally} />
+                <Button
+                  content="Leave"
+                  action={this.leaveRally}
+                  className={"leave"}
+                />
               ) : (
-                <Button content="Join" action={this.joinRally} />
+                <Button
+                  content="Join"
+                  action={this.joinRally}
+                  className={"join"}
+                />
               )}
             </div>
             {this.state.onFindPage ? null : (

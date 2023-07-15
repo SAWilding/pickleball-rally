@@ -115,17 +115,9 @@ export default class Header extends React.Component {
     return (
       <div className="account-btn">
         {user ? (
-          <Button
-            content="Logout"
-            action={this.logout}
-            className="account-btn"
-          ></Button>
+          <Button content="Logout" action={this.logout}></Button>
         ) : (
-          <Button
-            content="Login"
-            action={this.toggleVisibilityLog}
-            className="account-btn"
-          ></Button>
+          <Button content="Login" action={this.toggleVisibilityLog}></Button>
         )}
       </div>
     );
@@ -193,6 +185,7 @@ export default class Header extends React.Component {
         className="logo"
         width={200}
         height={200}
+        priority
       />
     );
   }
